@@ -36,9 +36,36 @@ app.post("/addmove",(req,res)=>{
     
 })
 
-//delete
+//delete with put
 
 app.put("/delete",(req,res)=>{
+    const deleteFrommove =req.body.id
+    fs.readFile('./move.json',(err,data)=>{
+        const moves =JSON.parse(data.toString())
+        const upmoves =moves.map((elem)=>{
+            if(elem.id === deleteFrommove){
+                elem.isdelete =true
+            }
+
+  return elem;
+
+        });
+
+        addToFill(upmoves);
+        res.status(200).json(upmoves)
+    })
+   
+   
+})
+
+
+
+
+
+//delete with delete
+
+
+app.delete("/delete1",(req,res)=>{
     const deleteFrommove =req.body.id
     fs.readFile('./move.json',(err,data)=>{
         const moves =JSON.parse(data.toString())
